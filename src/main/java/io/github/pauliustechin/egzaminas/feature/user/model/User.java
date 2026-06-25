@@ -1,6 +1,6 @@
-package io.github.pauliustechin.egzaminas.feature.model;
+package io.github.pauliustechin.egzaminas.feature.user.model;
 
-import io.github.pauliustechin.egzaminas.feature.dto.UserRole;
+import io.github.pauliustechin.egzaminas.feature.user.dto.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

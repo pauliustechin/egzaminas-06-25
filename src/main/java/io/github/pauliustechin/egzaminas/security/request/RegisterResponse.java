@@ -1,6 +1,6 @@
 package io.github.pauliustechin.egzaminas.security.request;
 
-import io.github.pauliustechin.egzaminas.feature.dto.UserRole;
+import io.github.pauliustechin.egzaminas.feature.user.dto.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -1,9 +1,9 @@
 package io.github.pauliustechin.egzaminas.security.service;
 import io.github.pauliustechin.egzaminas.exception.DuplicateUsernameException;
 import io.github.pauliustechin.egzaminas.exception.UserAuthenticationException;
-import io.github.pauliustechin.egzaminas.feature.dto.UserMapper;
-import io.github.pauliustechin.egzaminas.feature.model.User;
-import io.github.pauliustechin.egzaminas.feature.repository.UserRepository;
+import io.github.pauliustechin.egzaminas.feature.user.dto.UserMapper;
+import io.github.pauliustechin.egzaminas.feature.user.model.User;
+import io.github.pauliustechin.egzaminas.feature.user.repository.UserRepository;
 import io.github.pauliustechin.egzaminas.security.jwt.JwtUtils;
 import io.github.pauliustechin.egzaminas.security.request.*;
 import lombok.RequiredArgsConstructor;

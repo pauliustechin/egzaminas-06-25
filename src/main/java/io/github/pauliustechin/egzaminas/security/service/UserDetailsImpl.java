@@ -1,7 +1,7 @@
 package io.github.pauliustechin.egzaminas.security.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.github.pauliustechin.egzaminas.feature.model.User;
+import io.github.pauliustechin.egzaminas.feature.user.model.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

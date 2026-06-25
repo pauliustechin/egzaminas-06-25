@@ -1,6 +1,6 @@
-package io.github.pauliustechin.egzaminas.feature.dto;
+package io.github.pauliustechin.egzaminas.feature.user.dto;
 
-import io.github.pauliustechin.egzaminas.feature.model.User;
+import io.github.pauliustechin.egzaminas.feature.user.model.User;
 import io.github.pauliustechin.egzaminas.security.request.RegisterRequest;
 import io.github.pauliustechin.egzaminas.security.request.RegisterResponse;
 import org.springframework.stereotype.Component;

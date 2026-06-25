@@ -1,7 +1,7 @@
 package io.github.pauliustechin.egzaminas.security.service;
 
-import io.github.pauliustechin.egzaminas.feature.model.User;
-import io.github.pauliustechin.egzaminas.feature.repository.UserRepository;
+import io.github.pauliustechin.egzaminas.feature.user.model.User;
+import io.github.pauliustechin.egzaminas.feature.user.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

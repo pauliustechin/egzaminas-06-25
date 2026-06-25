@@ -1,6 +1,6 @@
-package io.github.pauliustechin.egzaminas.feature.repository;
+package io.github.pauliustechin.egzaminas.feature.user.repository;
 
-import io.github.pauliustechin.egzaminas.feature.model.User;
+import io.github.pauliustechin.egzaminas.feature.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
