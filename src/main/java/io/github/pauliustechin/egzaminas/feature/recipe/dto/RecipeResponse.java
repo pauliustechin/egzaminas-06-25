@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 public record RecipeResponse(
         Long recipeId,
         String recipeName,
-        String description
+        String description,
+        BigDecimal rating
 //        List<Ingredients> ingredients,
-//        BigDecimal rating
 
 ) {
 }

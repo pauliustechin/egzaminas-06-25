@@ -6,8 +6,10 @@ import io.github.pauliustechin.egzaminas.feature.recipe.dto.RecipeResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 
+import java.math.BigDecimal;
+
 public interface RecipeService {
-    RecipeListResponse getAllRecipes(String recipeName, String categoryName, Pageable pageable);
+    RecipeListResponse getAllRecipes(String recipeName, String categoryName, BigDecimal minRating, BigDecimal maxRating, Pageable pageable);
 
     RecipeResponse getRecipeById(Long recipeId);
 

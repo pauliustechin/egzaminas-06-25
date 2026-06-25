@@ -3,6 +3,8 @@ package io.github.pauliustechin.egzaminas.feature.recipe.dto;
 import io.github.pauliustechin.egzaminas.feature.recipe.model.Recipe;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 public class RecipeMapper {
 
@@ -15,11 +17,12 @@ public class RecipeMapper {
     }
 
 
-    public RecipeResponse toResponse(Recipe recipe) {
+    public RecipeResponse toResponse(Recipe recipe, BigDecimal rating) {
         return new RecipeResponse(
                 recipe.getId(),
                 recipe.getRecipeName(),
-                recipe.getDescription()
+                recipe.getDescription(),
+                rating
         );
     }
 }

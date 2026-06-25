@@ -1,5 +1,6 @@
 package io.github.pauliustechin.egzaminas.feature.user.model;
 
+import io.github.pauliustechin.egzaminas.feature.ratings.model.Rating;
 import io.github.pauliustechin.egzaminas.feature.recipe.model.Recipe;
 import io.github.pauliustechin.egzaminas.feature.user.dto.UserRole;
 import jakarta.persistence.*;
@@ -36,6 +37,13 @@ public class User {
             orphanRemoval = true
     )
     private Set<Recipe> recipes = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Rating> ratings = new HashSet<>();
 
     private Instant createdAt;
 

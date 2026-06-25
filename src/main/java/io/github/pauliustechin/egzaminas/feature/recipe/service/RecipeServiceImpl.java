@@ -4,6 +4,8 @@ import io.github.pauliustechin.egzaminas.exception.NotAllowedApiActionException;
 import io.github.pauliustechin.egzaminas.exception.ResourceNotFoundException;
 import io.github.pauliustechin.egzaminas.feature.category.model.Category;
 import io.github.pauliustechin.egzaminas.feature.category.repository.CategoryRepository;
+import io.github.pauliustechin.egzaminas.feature.ratings.model.Rating;
+import io.github.pauliustechin.egzaminas.feature.ratings.repository.RatingRepository;
 import io.github.pauliustechin.egzaminas.feature.recipe.dto.CreateRecipeRequest;
 import io.github.pauliustechin.egzaminas.feature.recipe.dto.RecipeListResponse;
 import io.github.pauliustechin.egzaminas.feature.recipe.dto.RecipeMapper;
@@ -20,7 +22,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -30,25 +35,43 @@ public class RecipeServiceImpl implements RecipeService {
     private final RecipeMapper recipeMapper;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+    private final RatingRepository ratingRepository;
 
     @Override
     public RecipeListResponse getAllRecipes(
             String recipeName,
             String categoryName,
+            BigDecimal minRating,
+            BigDecimal maxRating,
             Pageable pageable
     ) {
-        Specification<Recipe> specification = Specification
-                .where(RecipeSpecification.hasRecipeName(recipeName))
-                .and(RecipeSpecification.hasCategoryName(categoryName));
+
+        Specification<Recipe> specification =
+                Specification
+                        .where(RecipeSpecification.hasRecipeName(recipeName))
+                        .and(RecipeSpecification.hasCategoryName(categoryName))
+                        .and(RecipeSpecification.hasMinimumRating(minRating))
+                        .and(RecipeSpecification.hasMaximumRating(maxRating));
 
         Page<Recipe> pageRecipes = recipeRepository.findAll(specification, pageable);
 
-        System.out.println(pageRecipes.getTotalElements());
-        System.out.println(pageRecipes);
-
-
         List<RecipeResponse> recipes = pageRecipes.stream()
-                .map(recipe -> recipeMapper.toResponse(recipe))
+                .map(recipe -> {
+                    BigDecimal ratingAvg = null;
+                    Set<Rating> ratings = recipe.getRatings();
+                    if(ratings != null && !ratings.isEmpty()) {
+                        ratingAvg = ratings.stream()
+                                .map(Rating::getRating)
+                                .map(BigDecimal::valueOf)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                                .divide(
+                                        BigDecimal.valueOf(ratings.size()),
+                                        2,
+                                        RoundingMode.HALF_UP
+                                );
+                    }
+                    return recipeMapper.toResponse(recipe, ratingAvg);
+                })
                 .toList();
 
         RecipeListResponse response = new RecipeListResponse();
@@ -69,7 +92,21 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Recipe", recipeId));
 
-        return recipeMapper.toResponse(recipe);
+        BigDecimal ratingAvg = null;
+        Set<Rating> ratings = recipe.getRatings();
+        if(ratings != null && !ratings.isEmpty()) {
+            ratingAvg = ratings.stream()
+                    .map(Rating::getRating)
+                    .map(BigDecimal::valueOf)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add)
+                    .divide(
+                            BigDecimal.valueOf(ratings.size()),
+                            2,
+                            RoundingMode.HALF_UP
+                    );
+        }
+
+        return recipeMapper.toResponse(recipe, ratingAvg);
     }
 
     @Override
@@ -87,7 +124,21 @@ public class RecipeServiceImpl implements RecipeService {
 
         Recipe savedRecipe = recipeRepository.save(recipe);
 
-        return recipeMapper.toResponse(savedRecipe);
+        BigDecimal ratingAvg = null;
+        Set<Rating> ratings = recipe.getRatings();
+        if(ratings != null && !ratings.isEmpty()) {
+            ratingAvg = ratings.stream()
+                    .map(Rating::getRating)
+                    .map(BigDecimal::valueOf)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add)
+                    .divide(
+                            BigDecimal.valueOf(ratings.size()),
+                            2,
+                            RoundingMode.HALF_UP
+                    );
+        }
+
+        return recipeMapper.toResponse(savedRecipe, ratingAvg);
     }
 
     @Override

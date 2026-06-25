@@ -17,6 +17,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -29,10 +31,12 @@ public class RecipeController {
     public ResponseEntity<RecipeListResponse> getAllRecipes(
             @RequestParam(required = false) String recipeName,
             @RequestParam(required = false) String categoryName,
+            @RequestParam(required = false) BigDecimal minRating,
+            @RequestParam(required = false) BigDecimal maxRating,
             @ParameterObject @PageableDefault(page = 0, size = 10, sort="createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
 
-        RecipeListResponse response = recipeService.getAllRecipes(recipeName, categoryName, pageable);
+        RecipeListResponse response = recipeService.getAllRecipes(recipeName, categoryName, minRating, maxRating, pageable);
 
         return ResponseEntity.ok(response);
     }
