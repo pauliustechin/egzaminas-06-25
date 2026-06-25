@@ -1,5 +1,6 @@
 package io.github.pauliustechin.egzaminas.feature.user.model;
 
+import io.github.pauliustechin.egzaminas.feature.recipe.model.Recipe;
 import io.github.pauliustechin.egzaminas.feature.user.dto.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +29,13 @@ public class User {
     private String password;
 
     private UserRole role;
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Recipe> recipes = new HashSet<>();
 
     private Instant createdAt;
 

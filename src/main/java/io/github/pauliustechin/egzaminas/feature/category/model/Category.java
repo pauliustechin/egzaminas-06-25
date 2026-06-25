@@ -1,5 +1,6 @@
 package io.github.pauliustechin.egzaminas.feature.category.model;
 
+import io.github.pauliustechin.egzaminas.feature.recipe.model.Recipe;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.*;
@@ -7,10 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "categories")
@@ -30,8 +30,8 @@ public class Category {
     @Column(length = 200)
     private String description;
 
-//    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Recipe> recipes = new ArrayList<>();
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Recipe> recipes = new HashSet<>();
 
     private Instant createdAt;
 

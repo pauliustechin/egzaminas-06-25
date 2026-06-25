@@ -21,6 +21,15 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @GetMapping
+    public ResponseEntity<CategoryListResponse> getAllCategories() {
+
+        CategoryListResponse response = categoryService.getAllCategories();
+
+        return ResponseEntity.ok(response);
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<CategoryResponse> createCategory(
@@ -40,14 +49,5 @@ public class CategoryController {
         categoryService.deleteCategory(categoryId);
 
         return ResponseEntity.noContent().build();
-    }
-
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    @GetMapping
-    public ResponseEntity<CategoryListResponse> getAllCategories() {
-
-        CategoryListResponse response = categoryService.getAllCategories();
-
-        return ResponseEntity.ok(response);
     }
 }
