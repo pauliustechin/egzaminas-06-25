@@ -4,10 +4,8 @@ import io.github.pauliustechin.egzaminas.feature.recipe.model.Recipe;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Category {
 
     @Id

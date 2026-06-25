@@ -35,7 +35,6 @@ public class RecipeServiceImpl implements RecipeService {
     private final RecipeMapper recipeMapper;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
-    private final RatingRepository ratingRepository;
 
     @Override
     public RecipeListResponse getAllRecipes(
@@ -111,6 +110,14 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public RecipeResponse createRecipe(Long userId, Long categoryId, CreateRecipeRequest request) {
+
+        if(userId == null) {
+            throw new ResourceNotFoundException("User", userId);
+        }
+
+        if(categoryId == null) {
+            throw new ResourceNotFoundException("Category", categoryId);
+        }
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", userId));
